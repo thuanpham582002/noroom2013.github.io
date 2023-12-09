@@ -1,10 +1,8 @@
 ---
 layout: post
 title: Learn about OOP
-subtitle: There's lots to learn!
-gh-repo: daattali/beautiful-jekyll
-gh-badge: [ star, fork, follow ]
-tags: [ test ]
+subtitle: Simple things about OOP
+tags: [ oop ]
 comments: true
 author: NoRoom2013
 ---

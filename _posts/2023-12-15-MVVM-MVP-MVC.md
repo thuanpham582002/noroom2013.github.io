@@ -1,6 +1,6 @@
 ---
 layout: post
-title: What is suspend function in coroutines?
+title: Different types of software architecture (MVC, MVP, MVVM)
 subtitle: There's lots to learn!
 gh-repo: daattali/beautiful-jekyll
 gh-badge: [star, fork, follow]

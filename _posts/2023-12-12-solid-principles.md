@@ -1,6 +1,6 @@
 ---
 layout: post
-title: What is suspend function in coroutines?
+title: What is SOLID principles?
 subtitle: There's lots to learn!
 gh-repo: daattali/beautiful-jekyll
 gh-badge: [star, fork, follow]

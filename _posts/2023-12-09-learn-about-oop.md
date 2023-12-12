@@ -2,7 +2,7 @@
 layout: post
 title: Learn about OOP
 subtitle: Simple things about OOP
-tags: [ oop ]
+tags: [ oop, java ]
 comments: true
 author: NoRoom2013
 ---
@@ -11,7 +11,7 @@ author: NoRoom2013
 
 - [What is OOP?](#what-is-oop)
 - [Elements of OOP](#elements-of-oop)
-- [4 Pillars of OOP](#4-pillars-of-oop)]
+- [4 Pillars of OOP](#4-pillars-of-oop)
 - [Encapsulation](#encapsulation)
 - [Abstraction](#abstraction)
 - [Inheritance](#inheritance)
@@ -275,14 +275,17 @@ public class Main {
 }
 ```
 
-``` {output}
-Dog
-5
-Vietnam
-Cat
-3
-Vietnam
-```
+
+> Dog
+> 
+> 5
+> 
+> Vietnam
+> Cat
+> 
+> 3
+> 
+> Vietnam
 
 ## Polymorphism
 

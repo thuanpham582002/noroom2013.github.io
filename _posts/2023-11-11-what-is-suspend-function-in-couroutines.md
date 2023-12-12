@@ -3,89 +3,103 @@ layout: post
 title: What is suspend function in coroutines?
 subtitle: There's lots to learn!
 gh-repo: daattali/beautiful-jekyll
-gh-badge: [star, fork, follow]
-tags: [test]
+gh-badge: [ star, fork, follow ]
+tags: [ test ]
 comments: true
 author: NoRoom2013
 ---
 
-{: .box-success}
-This is a demo post to show you how to write blog posts with markdown.  I strongly encourage you to [take 5 minutes to learn how to write in markdown](https://markdowntutorial.com/) - it'll teach you how to transform regular text into bold/italics/tables/etc.<br/>I also encourage you to look at the [code that created this post](https://raw.githubusercontent.com/daattali/beautiful-jekyll/master/_posts/2020-02-28-sample-markdown.md) to learn some more advanced tips about using markdown in Beautiful Jekyll.
+Tôi thường nghe về câu nói như : "Suspending functions are at the center of everything coroutines" (Tạm dịch: "Các hàm
+tạm dừng là trung tâm của mọi thứ trong coroutines"). Vậy thì Suspend Function là gì? Tại sao nó lại quan trọng đến vậy?
 
-**Here is some bold text**
+Bài viết có tham
+khảo: [Kotlin Coroutines — A deep dive](https://anant-raman.medium.com/kotlin-coroutines-a-deep-dive-e8c9d4451a0b), [A deep dive into Kotlin Coroutines](https://medium.com/@viniciusviana_61216/a-deep-dive-into-kotlin-coroutines-a621d2978451)
 
-## Here is a secondary heading
+## Table of Contents
 
-[This is a link to a different site](https://deanattali.com/) and [this is a link to a section inside this page](#local-urls).
+- [Coroutines capabilities](#coroutines-capabilities)
+- [Suspending functions](#suspending-functions)
+- [Suspending functions are at the center of everything coroutines](#suspending-functions-are-at-the-center-of-everything-coroutines)
 
-Here's a table:
+## Coroutines capabilities
 
-| Number | Next number | Previous number |
-| :------ |:--- | :--- |
-| Five | Six | Four |
-| Ten | Eleven | Nine |
-| Seven | Eight | Six |
-| Two | Three | One |
+A coroutine is an instance of a suspendable computation.
+It is conceptually similar to a thread, in the sense that it takes a block of code to run that works concurrently with
+the rest of the code.
+However, a coroutine is not bound to any particular thread. It may suspend its execution in one thread and resume in
+another one.
 
-How about a yummy crepe?
+## Suspending functions
 
-![Crepe](https://beautifuljekyll.com/assets/img/crepe.jpg)
+A suspending function is a function that can be suspended and resumed at a later time.
+So, what does it mean to suspended and resumed?
 
-It can also be centered!
+## Suspending functions are at the center of everything coroutines
 
-![Crepe](https://beautifuljekyll.com/assets/img/crepe.jpg){: .mx-auto.d-block :}
+Quay lại với [Coroutines capabilities](#coroutines-capabilities) thì coroutine được mô tả như thế này:
 
-Here's a code chunk:
+> It may suspend its execution in one thread and resume in another one.
 
-~~~
-var foo = function(x) {
-  return(x + 5);
+Tạm dịch: coroutine có thể tạm dừng việc thực thi của nó ở một thread và tiếp tục thực thi ở thread khác.
+Ở đây tôi sẽ có ví dụ như này:
+
+```kotlin
+// This function called on the main thread
+suspend fun loadUser() {
+    val user = api.fetchUser()  // This function called on the IO thread
+    displayUser(user)
 }
-foo(3)
-~~~
 
-And here is the same code with syntax highlighting:
-
-```javascript
-var foo = function(x) {
-  return(x + 5);
+suspend fun Api.fetchUser(): User {
+    return withContext(Dispatchers.IO) {
+        // fetch user from the network
+    }
 }
-foo(3)
 ```
 
-And here is the same code yet again but with line numbers:
+> Ở đây bạn cần biết thêm về Dispatchers, tôi sẽ giải thích ở phần sau.
 
-{% highlight javascript linenos %}
-var foo = function(x) {
-  return(x + 5);
+Lúc đó luồng hoạt đông của app sẽ như sau:
+![coroutines](../assets/img/2023-11-11-what-is-suspend-function-in-couroutines/1.png)
+Như vậy, suspend ở đây là treo việc thực thi của coroutine ở nơi nó được gọi, và thực thi những lệnh bên trong nó.
+
+Ồ, vậy thì nó khác gì với 1 function bình thường:
+
+``` kotlin
+private suspend fun doWorld2() {
+        println("World!")
 }
-foo(3)
-{% endhighlight %}
+```
 
-## Boxes
-You can add notification, warning and error boxes like this:
+đây là đoạn mã doWorld2() sau khi được kotlin compiler biên dịch (Tôi sẽ decode sang java để dễ hiểu hơn):
 
-### Notification
+``` java
+private static final Object doWorld2(Continuation $completion) {
+      Object var10000 = DelayKt.delay(1000L, $completion);
+      return var10000 == IntrinsicsKt.getCOROUTINE_SUSPENDED() ? var10000 : Unit.INSTANCE;
+   }
+```
 
-{: .box-note}
-**Note:** This is a notification box.
+Như các bạn thấy, sau khi compiler biên dịch,suspend function doWorld2() trở thành một function bình thường
+có thêm một tham số là Continuation.
+Đây thực sự là gì?
 
-### Warning
+> A continuation is a representation of the remaining computation after a suspension point.
 
-{: .box-warning}
-**Warning:** This is a warning box.
+Tạm dịch: Continuation là một biểu diễn của việc tính toán còn lại sau một điểm tạm dừng.
+Điều này tương ứng với "Resume" trong flow chart ở trên.
+Còn tương ứng trong code sẽ là:
 
-### Error
+``` java
+return var10000 == IntrinsicsKt.getCOROUTINE_SUSPENDED() ? var10000 : Unit.INSTANCE;
+```
 
-{: .box-error}
-**Error:** This is an error box.
+Chi tiết hơn về Continuation, bạn có thể đọc thêm
+ở [đây](https://medium.com/@viniciusviana_61216/a-deep-dive-into-kotlin-coroutines-a621d2978451).
 
-## Local URLs in project sites {#local-urls}
+Continuation sẽ dữ 1 CoroutineContext, điều này sẽ cho phép chuyển luồng ở suspend function. Do vậy, ở ví dụ
+flow đầu tiên, hàm loadUser đã được gọi trên main thread, nhưng khi gọi hàm fetchUser() thì nó đã chuyển sang
+IO thread. Do vậy nó sẽ không block main thread, và khi hàm fetchUser() hoàn thành, nó sẽ chuyển lại main thread.
 
-When hosting a *project site* on GitHub Pages (for example, `https://USERNAME.github.io/MyProject`), URLs that begin with `/` and refer to local files may not work correctly due to how the root URL (`/`) is interpreted by GitHub Pages. You can read more about it [in the FAQ](https://beautifuljekyll.com/faq/#links-in-project-page). To demonstrate the issue, the following local image will be broken **if your site is a project site:**
-
-![Crepe](/assets/img/crepe.jpg)
-
-If the above image is broken, then you'll need to follow the instructions [in the FAQ](https://beautifuljekyll.com/faq/#links-in-project-page). Here is proof that it can be fixed:
-
-![Crepe]({{ '/assets/img/crepe.jpg' | relative_url }})
+Do vậy Suspend Function thực sự là trung tâm của mọi thứ trong coroutines. và cũng chỉ
+có thể gọi suspend Function trong một coroutineScope hoặc một suspend function khác.

@@ -3,89 +3,78 @@ layout: post
 title: What is SOLID principles?
 subtitle: There's lots to learn!
 gh-repo: daattali/beautiful-jekyll
-gh-badge: [star, fork, follow]
-tags: [test]
+gh-badge: [ star, fork, follow ]
+tags: [ test ]
 comments: true
 author: NoRoom2013
 ---
 
-{: .box-success}
-This is a demo post to show you how to write blog posts with markdown.  I strongly encourage you to [take 5 minutes to learn how to write in markdown](https://markdowntutorial.com/) - it'll teach you how to transform regular text into bold/italics/tables/etc.<br/>I also encourage you to look at the [code that created this post](https://raw.githubusercontent.com/daattali/beautiful-jekyll/master/_posts/2020-02-28-sample-markdown.md) to learn some more advanced tips about using markdown in Beautiful Jekyll.
+This post have reference
+from [SOLID Principles](https://medium.com/backticks-tildes/the-s-o-l-i-d-principles-in-pictures-b34ce2f1e898)
 
-**Here is some bold text**
+## Table of Contents
 
-## Here is a secondary heading
+[What is SOLID principles?](#what-is-solid-principles)
 
-[This is a link to a different site](https://deanattali.com/) and [this is a link to a section inside this page](#local-urls).
+- [Single Responsibility Principle](#single-responsibility-principle)
+- [Open/Closed Principle](#openclosed-principle)
+- [Liskov Substitution Principle](#liskov-substitution-principle)
+- [Interface Segregation Principle](#interface-segregation-principle)
+- [Dependency Inversion Principle](#dependency-inversion-principle)
+- [Understanding Low Coupling và High Cohesion](#understanding-low-coupling-và-high-cohesion)
 
-Here's a table:
+## What is SOLID principles?
 
-| Number | Next number | Previous number |
-| :------ |:--- | :--- |
-| Five | Six | Four |
-| Ten | Eleven | Nine |
-| Seven | Eight | Six |
-| Two | Three | One |
+> SOLID is an acronym for the first five object-oriented design(OOD) principles by Robert C. Martin, popularly known as
+> Uncle Bob.
+>
+> These principles, when combined together, make it easy for a programmer to develop software that are easy to maintain
+> and extend.
+>
+> They also make it easy for developers to avoid code smells, easily refactor code, and are also a part of the agile or
+> adaptive software development.
 
-How about a yummy crepe?
+So, what is SOLID principles?
 
-![Crepe](https://beautifuljekyll.com/assets/img/crepe.jpg)
+- [**S**ingle Responsibility Principle](#single-responsibility-principle)
+- [**O**pen/Closed Principle](#openclosed-principle)
+- [**L**iskov Substitution Principle](#liskov-substitution-principle)
+- [**I**nterface Segregation Principle](#interface-segregation-principle)
+- [**D**ependency Inversion Principle](#dependency-inversion-principle)
 
-It can also be centered!
+## Single Responsibility Principle
 
-![Crepe](https://beautifuljekyll.com/assets/img/crepe.jpg){: .mx-auto.d-block :}
+> A class should have one and only one reason to change, meaning that a class should have only one job.
+![Single Responsibility Principle](../assets/img/2023-12-12-solid-principles/single-responsibility-principle.webp)
 
-Here's a code chunk:
+## Open/Closed Principle
 
-~~~
-var foo = function(x) {
-  return(x + 5);
-}
-foo(3)
-~~~
+> Objects or entities should be open for extension but closed for modification.
 
-And here is the same code with syntax highlighting:
+![Open/Closed Principle](../assets/img/2023-12-12-solid-principles/open-closed-principle.webp)
 
-```javascript
-var foo = function(x) {
-  return(x + 5);
-}
-foo(3)
-```
+## Liskov Substitution Principle
 
-And here is the same code yet again but with line numbers:
+> Every subclass/derived class should be substitutable for their base/parent class.
 
-{% highlight javascript linenos %}
-var foo = function(x) {
-  return(x + 5);
-}
-foo(3)
-{% endhighlight %}
+![Liskov Substitution Principle](../assets/img/2023-12-12-solid-principles/liskov-substitution-principle.webp)
 
-## Boxes
-You can add notification, warning and error boxes like this:
+- This principle is very rigid in theory, but in practice it cannot be applied 100%.
+- Even in the Android source code there are many examples that violate this principle.
 
-### Notification
+## Interface Segregation Principle
 
-{: .box-note}
-**Note:** This is a notification box.
+> A client should never be forced to implement an interface that it doesn’t use, or clients shouldn’t be forced to
+> depend on methods they do not use.
 
-### Warning
+![Interface Segregation Principle](../assets/img/2023-12-12-solid-principles/interface-segregation-principle.webp)
 
-{: .box-warning}
-**Warning:** This is a warning box.
+## Dependency Inversion Principle
 
-### Error
+> Entities must depend on abstractions not on concretions. It states that the high-level module must not depend on the
+> low-level module, but they should depend on abstractions.
 
-{: .box-error}
-**Error:** This is an error box.
+![Dependency Inversion Principle](../assets/img/2023-12-12-solid-principles/dependency-inversion-principle.webp)
 
-## Local URLs in project sites {#local-urls}
-
-When hosting a *project site* on GitHub Pages (for example, `https://USERNAME.github.io/MyProject`), URLs that begin with `/` and refer to local files may not work correctly due to how the root URL (`/`) is interpreted by GitHub Pages. You can read more about it [in the FAQ](https://beautifuljekyll.com/faq/#links-in-project-page). To demonstrate the issue, the following local image will be broken **if your site is a project site:**
-
-![Crepe](/assets/img/crepe.jpg)
-
-If the above image is broken, then you'll need to follow the instructions [in the FAQ](https://beautifuljekyll.com/faq/#links-in-project-page). Here is proof that it can be fixed:
-
-![Crepe]({{ '/assets/img/crepe.jpg' | relative_url }})
+## Understanding Low Coupling và High Cohesion
+> doing...

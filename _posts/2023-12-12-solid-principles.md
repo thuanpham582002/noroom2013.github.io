@@ -2,9 +2,8 @@
 layout: post
 title: What is SOLID principles?
 subtitle: There's lots to learn!
-gh-repo: daattali/beautiful-jekyll
 gh-badge: [ star, fork, follow ]
-tags: [ test ]
+tags: [ solid ]
 comments: true
 author: NoRoom2013
 ---
